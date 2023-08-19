@@ -24,8 +24,8 @@ docker build ./ -f Dockerfile \
     --build-arg TAG_VERSION=${TAG_VERSION} \
     --build-arg TIMEZONE=${TIMEZONE}
 
-#docker build ./ -f Dockerfile.management \
-#    --tag ${IMAGE_NAME}:${TAG_VERSION}-manager \
-#    --build-arg HOST_USER_UID=${HOST_USER_UID} \
-#    --build-arg TAG_VERSION=${TAG_VERSION} \
-#    --build-arg TIMEZONE=${TIMEZONE}
+docker build ./ -f Dockerfile.management \
+    --tag ${IMAGE_NAME}:${TAG_VERSION}-manager \
+    --build-arg HOST_USER_UID=${HOST_USER_UID} \
+    --build-arg TAG_VERSION=${TAG_VERSION} \
+    --build-arg TIMEZONE=${TIMEZONE}

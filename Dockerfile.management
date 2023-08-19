@@ -1,8 +1,5 @@
 ## Build server
 FROM golang:1.13-alpine AS build-backend
-ARG TAG_VERSION
-ARG HOST_USER_UID
-ARG TIMEZONE
 ADD ./main.go /go/src/github.com/Roverr/rtsp-stream/main.go
 ADD ./core /go/src/github.com/Roverr/rtsp-stream/core
 ADD ./Gopkg.toml /go/src/github.com/Roverr/rtsp-stream/Gopkg.toml
