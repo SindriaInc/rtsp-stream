@@ -20,4 +20,4 @@ ENV TZ=${TIMEZONE}
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 COPY resources/rtsp-stream.yml /app/rtsp-stream.yml
-COPY resources/manager/supervisord.conf /etc/supervisord.conf
+COPY resources/supervisord.conf /etc/supervisord.conf
