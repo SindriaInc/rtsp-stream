@@ -23,7 +23,7 @@ TAG_SUFFIX=$3
 HOST_USER_UID=1000
 TIMEZONE=Europe/Rome
 
-docker build ./src \
+docker build -f Dockerfile . \
     --tag ${IMAGE_NAME}:${TAG_VERSION}-${TAG_SUFFIX} \
     --tag ${IMAGE_NAME}:latest \
     --build-arg HOST_USER_UID=${HOST_USER_UID} \
@@ -31,7 +31,7 @@ docker build ./src \
     --build-arg TAG_SUFFIX=${TAG_SUFFIX} \
     --build-arg TIMEZONE=${TIMEZONE}
 
-docker build ./src -f Dockerfile.manager \
+docker build -f Dockerfile.manager . \
     --tag ${IMAGE_NAME}:${TAG_VERSION}-${TAG_SUFFIX}-manager \
     --build-arg HOST_USER_UID=${HOST_USER_UID} \
     --build-arg TAG_VERSION=${TAG_VERSION} \
