@@ -14,6 +14,8 @@ IMAGE_NAME=$1
 TAG_VERSION=$2
 
 bash build.sh ${IMAGE_NAME} ${TAG_VERSION} 2
+# API
 docker push ${IMAGE_NAME}:${TAG_VERSION}-2
-docker push ${IMAGE_NAME}:${TAG_VERSION}-2-manager
 docker push ${IMAGE_NAME}:latest
+# UI
+docker push ${IMAGE_NAME}:${TAG_VERSION}-2-ui
