@@ -1,5 +1,5 @@
 ARG TAG_SUFFIX
-FROM roverr/rtsp-stream:${TAG_SUFFIX}
+FROM roverr/rtsp-stream:${TAG_SUFFIX}-management
 
 ARG TAG_VERSION
 ARG TAG_SUFFIX
