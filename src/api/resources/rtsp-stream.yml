@@ -13,11 +13,9 @@ endpoints:
 
 listen:
   - alias: "9009afaf-4c73-40ad-9712-badb80d77ec9"
-    id: 9009afaf-4c73-40ad-9712-badb80d77ec9
     uri: "rtsp://Almaviva01:Pa33;2023@192.168.214.12:554/live/9009afaf-4c73-40ad-9712-badb80d77ec9"
-    enabled: false
+    enabled: true
   - alias: "ac14db3b-4ab6-428c-86f5-2604a6aa65b7"
-    id: ac14db3b-4ab6-428c-86f5-2604a6aa65b7
     uri: "rtsp://Almaviva01:Pa33;2023@192.168.214.12:554/live/ac14db3b-4ab6-428c-86f5-2604a6aa65b7"
     enabled: true
 
