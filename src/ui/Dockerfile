@@ -21,3 +21,5 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 COPY resources/rtsp-stream.yml /app/rtsp-stream.yml
 COPY resources/supervisord.conf /etc/supervisord.conf
+
+WORKDIR /ui
