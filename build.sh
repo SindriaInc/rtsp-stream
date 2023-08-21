@@ -22,6 +22,7 @@ TAG_SUFFIX=$3
 
 HOST_USER_UID=1000
 TIMEZONE=Europe/Rome
+API_URL="https://kms-be-mvr.mobilita.comune.verona.it/api"
 
 docker build ./src/app \
     --tag ${IMAGE_NAME}:${TAG_VERSION}-${TAG_SUFFIX} \
@@ -43,4 +44,5 @@ docker build ./src/ui \
     --build-arg HOST_USER_UID=${HOST_USER_UID} \
     --build-arg TAG_VERSION=${TAG_VERSION} \
     --build-arg TAG_SUFFIX=${TAG_SUFFIX} \
-    --build-arg TIMEZONE=${TIMEZONE}
+    --build-arg TIMEZONE=${TIMEZONE} \
+    --build-arg API_URL=${API_URL}
