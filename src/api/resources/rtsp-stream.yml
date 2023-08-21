@@ -12,9 +12,6 @@ endpoints:
     secret: macilaci
 
 listen:
-  - alias: sample
-    uri: rtsp://user:pass@host/Streaming/Channels/123/
-    enabled: false
   - alias: ""
     id: 9009afaf-4c73-40ad-9712-badb80d77ec9
     uri: "rtsp://Almaviva01:Pa33;2023@192.168.214.12:554/live/9009afaf-4c73-40ad-9712-badb80d77ec9"
