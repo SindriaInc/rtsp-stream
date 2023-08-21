@@ -1,0 +1,18 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: rtsp-stream-ui
+  name: rtsp-stream-ui
+  namespace: kms
+spec:
+  ports:
+  - name: ui
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: rtsp-stream-ui
+  sessionAffinity: None
+  type: ClusterIP

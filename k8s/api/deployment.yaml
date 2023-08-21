@@ -1,0 +1,110 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: rtsp-stream-api
+  name: rtsp-stream-api
+  namespace: kms
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: rtsp-stream-api
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: rtsp-stream-api
+    spec:
+      imagePullSecrets:
+      - name: ets-jfrog
+      containers:
+      - env:
+        - name: RTSP_STREAM_CLEANUP_ENABLED
+          value: "true"
+        #- name: RTSP_STREAM_CLEANUP_TIME
+        #  value: "2m0s"
+        #- name: RTSP_STREAM_STORE_DIR
+        #  value: "./videos"
+        - name: RTSP_STREAM_AUDIO_ENABLED
+          value: "false"
+        - name: RTSP_STREAM_KEEP_FILES
+          value: "false"
+        - name: RTSP_STREAM_PROCESS_LOGGING_ENABLED
+          value: "false"
+        - name: RTSP_STREAM_PROCESS_LOGGING_DIR
+          value: "/var/log/rtsp-stream"
+        - name: RTSP_STREAM_PROCESS_LOGGING_MAX_SIZE
+          value: "500"
+        - name: RTSP_STREAM_PROCESS_LOGGING_MAX_AGE
+          value: "7"
+        - name: RTSP_STREAM_PROCESS_LOGGING_MAX_BACKUPS
+          value: "3"
+        - name: RTSP_STREAM_PROCESS_LOGGING_COMPRESS
+          value: "true"
+        - name: RTSP_STREAM_PORT
+          value: "8000"
+        - name: RTSP_STREAM_DEBUG
+          value: "true"
+        - name: RTSP_STREAM_CORS_ENABLED
+          value: "false"
+        image: sindriainc/rtsp-stream:1.0.0-2-api
+        imagePullPolicy: Always
+        securityContext:
+          capabilities:
+            add:
+              - NET_ADMIN 
+        #livenessProbe:
+        #  failureThreshold: 3
+        #  httpGet:
+        #    path: /afc/channelactivity/actuator/health
+        #    port: 8080
+        #    scheme: HTTP
+        #  initialDelaySeconds: 50
+        #  periodSeconds: 10
+        #  successThreshold: 1
+        #  timeoutSeconds: 1
+        name: rtsp-stream-api
+        ports:
+        - containerPort: 8000
+          protocol: TCP
+        #readinessProbe:
+        #  failureThreshold: 3
+        #  httpGet:
+        #    path: /afc/channelactivity/actuator/health
+        #    port: 8080
+        #    scheme: HTTP
+        #  initialDelaySeconds: 20
+        #  periodSeconds: 10
+        #  successThreshold: 1
+        #  timeoutSeconds: 1
+        resources:
+          limits:
+            memory: 4096Mi
+          requests:
+            memory: 2048Mi
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        #volumeMounts:
+        #- mountPath: /deployments/certs/truststore.jks
+        #  name: moova-java-keystore-volume
+        #  subPath: truststore.jks
+        #- mountPath: /deployments/certs/keystore.jks
+        #  name: moova-java-keystore-volume
+        #  subPath: keystore.jks
+      dnsPolicy: ClusterFirst
+      hostNetwork: true
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      terminationGracePeriodSeconds: 30
+      #volumes:
+      #- name: moova-java-keystore-volume
+      #  secret:
+      #    defaultMode: 420
+      #    secretName: moova-java-keystore
