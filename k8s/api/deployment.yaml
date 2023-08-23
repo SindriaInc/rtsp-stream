@@ -54,6 +54,8 @@ spec:
           value: "true"
         - name: RTSP_STREAM_CORS_ENABLED
           value: "false"
+        - name: RTSP_STREAM_CORS_ALLOWED_ORIGIN
+          value: "*"
         image: sindriainc/rtsp-stream:1.0.2-2-api
         imagePullPolicy: Always
         securityContext:
