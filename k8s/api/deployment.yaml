@@ -110,18 +110,3 @@ spec:
           claimName: rtsp-stream-api
           #defaultMode: 420
 ---
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  labels:
-    app: rtsp-stream-api
-  name: rtsp-stream-api
-  namespace: kms
-#provisioner: kubernetes.io/aws-ebs
-spec:
- accessModes:
-  - ReadWriteOnce
- resources:
-  requests:
-   storage: 512Gi
- storageClassName: csi-rbd-sc

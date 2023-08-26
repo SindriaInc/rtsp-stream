@@ -1,0 +1,214 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: afc-ticketingchannelinterface-cj-purchasecleaner
+  namespace: sbefce-afc
+spec:
+  concurrencyPolicy: Replace
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    metadata:
+      creationTimestamp: null
+    spec:
+      template:
+        metadata:
+          creationTimestamp: null
+          labels:
+            app: afc-ticketingchannelinterface-cj-purchasecleaner
+        spec:
+          containers:
+          - command:
+            - java
+            - -Xmx256m
+            - -Djavax.net.ssl.trustStore=/deployments/certs/truststore.jks
+            - -jar
+            - /deployments/prc.jar
+            env:
+            - name: JAVA_OPTS
+              value: -Xmx512m -Djavax.net.ssl.trustStore=/deployments/certs/truststore.jks
+            - name: MOOVA_AFC_TICKETINGCHANNELINTERFACE_CJ_PURCHASECLEANER_CHARGEOFF_CANCEL_MIN
+              value: "180"
+            - name: MOOVA_FND_CORE_LIB_SPRING_COMMON_AUTO_CONFIGURATION
+              value: "false"
+            - name: MOOVA_FND_CORE_LIB_SPRING_COMMON_SSL_VERIFY_PEER
+              value: "false"
+            - name: MOOVA_FND_CORE_LIB_SPRING_COMMON_SSL_VERIFY_HOST
+              value: "false"
+            - name: MOOVA_FND_CORE_LIB_SPRING_COMMON_SSL_TRUSTSTORE_STRICT
+              value: "false"
+            - name: MOOVA_FND_CORE_LIB_SPRING_COMMON_SSL_TRUSTSTORE_PATH
+            - name: MOOVA_FND_CORE_LIB_SPRING_COMMON_SSL_TRUSTSTORE_PASSWORD
+            - name: MOOVA_FND_INSTRUMENTATION_EVL_APPLICATIONSLOGS_KAFKA_LOGGING_ENABLED
+              value: "false"
+            - name: MOOVA_FND_INSTRUMENTATION_EVL_APPLICATIONSLOGS_KAFKA_TOPIC_NAME
+              value: fnd-instrumentation-evl-applicationlogs
+            - name: MOOVA_FND_INSTRUMENTATION_EVL_APPLICATIONSLOGS_KAFKA_BOOTSTRAP_SERVERS
+              valueFrom:
+                configMapKeyRef:
+                  key: MOOVA_CLUSTER_KAFKA_HOST
+                  name: moova-global-cm
+            - name: MOOVA_FND_INSTRUMENTATION_EVL_APPLICATIONSLOGS_KAFKA_SECURITY_PROTOCOL
+              valueFrom:
+                configMapKeyRef:
+                  key: MOOVA_CLUSTER_KAFKA_SECURITY_PROTOCOL
+                  name: moova-global-cm
+            - name: MOOVA_FND_INSTRUMENTATION_EVL_APPLICATIONSLOGS_KAFKA_SASL_MECHANISM
+              value: SCRAM-SHA-512
+            - name: MOOVA_FND_INSTRUMENTATION_EVL_APPLICATIONSLOGS_KAFKA_SASL_JAAS_CONFIG
+              valueFrom:
+                secretKeyRef:
+                  key: MOOVA_CLUSTER_KAFKA_SASL_JAAS_CONFIG
+                  name: moova-global-secret
+            - name: MOOVA_FND_INSTRUMENTATION_EVL_APPLICATIONSLOGS_KAFKA_SSL_ENDPOINT_IDENTIFICATION_ALGORITHM
+            - name: MOOVA_AFC_TICKETINGCHANNELINTERFACE_KS_CAD_CASSANDRA_HOST
+              valueFrom:
+                configMapKeyRef:
+                  key: MOOVA_CLUSTER_CASSANDRA_HOST
+                  name: moova-global-cm
+            - name: MOOVA_AFC_TICKETINGCHANNELINTERFACE_KS_CAD_CASSANDRA_KEYSPACE
+              value: afc_ticketingchannelinterface_ks_interactive
+            - name: MOOVA_AFC_TICKETINGCHANNELINTERFACE_KS_CAD_CASSANDRA_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: MOOVA_CLUSTER_CASSANDRA_PASSWORD
+                  name: moova-global-secret
+            - name: MOOVA_AFC_TICKETINGCHANNELINTERFACE_KS_CAD_CASSANDRA_PORT
+              value: "9042"
+            - name: MOOVA_AFC_TICKETINGCHANNELINTERFACE_KS_CAD_CASSANDRA_USER
+              valueFrom:
+                secretKeyRef:
+                  key: MOOVA_CLUSTER_CASSANDRA_USER
+                  name: moova-global-secret
+            - name: MOOVA_IHBTKT_CUSTOMERACTIVITY_EVL_TRANSACTION_KAFKA_HOST
+              valueFrom:
+                configMapKeyRef:
+                  key: MOOVA_CLUSTER_KAFKA_HOST
+                  name: moova-global-cm
+            - name: MOOVA_IHBTKT_CUSTOMERACTIVITY_EVL_TRANSACTION_KAFKA_PRODUCER_CLIENT_ID
+              value: afc-ticketingchannelinterface-cj-purchasecleaner
+            - name: MOOVA_IHBTKT_CUSTOMERACTIVITY_EVL_TRANSACTION_KAFKA_PRODUCER_ORGANISATION_NAME
+              value: MOOVA
+            - name: MOOVA_IHBTKT_CUSTOMERACTIVITY_EVL_TRANSACTION_KAFKA_PRODUCER_SOURCE
+              value: afc-ticketingchannelinterface-cj-purchasecleaner
+            - name: MOOVA_IHBTKT_CUSTOMERACTIVITY_EVL_TRANSACTION_KAFKA_PRODUCER_TOPIC_NAME
+              value: ihbtkt-customeractivity-evl-transactionin
+            - name: MOOVA_IHBTKT_CUSTOMERACTIVITY_EVL_TRANSACTION_KAFKA_PRODUCER_SECURITY_PROTOCOL
+              valueFrom:
+                configMapKeyRef:
+                  key: MOOVA_CLUSTER_KAFKA_SECURITY_PROTOCOL
+                  name: moova-global-cm
+            - name: MOOVA_IHBTKT_CUSTOMERACTIVITY_EVL_TRANSACTION_KAFKA_PRODUCER_SASL_MECHANISM
+              value: SCRAM-SHA-512
+            - name: MOOVA_IHBTKT_CUSTOMERACTIVITY_EVL_TRANSACTION_KAFKA_PRODUCER_SASL_JAAS_CONFIG
+              valueFrom:
+                secretKeyRef:
+                  key: MOOVA_CLUSTER_KAFKA_SASL_JAAS_CONFIG
+                  name: moova-global-secret
+            - name: MOOVA_IHBTKT_CUSTOMERACTIVITY_EVL_TRANSACTION_KAFKA_PRODUCER_SSL_ENDPOINT_IDENTIFICATION_ALGORITHM
+            - name: MOOVA_AFC_TICKETINGCHANNELINTERFACE_CJ_PURCHASECLEANER_ACTUATOR_ENDPOINT_HEALTH_SHOW_DETAILS
+              value: never
+            - name: MOOVA_AFC_TICKETINGCHANNELINTERFACE_CJ_PURCHASECLEANER_LOG_COMPONENT_NAME
+              value: moova_afc-ticketingchannelinterface-cj-purchasecleaner_ds-spring
+            - name: MOOVA_AFC_TICKETINGCHANNELINTERFACE_CJ_PURCHASECLEANER_LOG_LEVEL
+              value: INFO
+            - name: MOOVA_AFC_TICKETINGCHANNELINTERFACE_CJ_PURCHASECLEANER_ALMAVIVA_LOG_LEVEL
+              value: INFO
+            - name: MOOVA_AFC_TICKETINGCHANNELINTERFACE_CJ_PURCHASECLEANER_ALMAVIVA_WTF_LOG_LEVEL
+              value: INFO
+            - name: MOOVA_AFC_TICKETINGCHANNELINTERFACE_CJ_PURCHASECLEANER_TRANSACTION_KAFKA_PRODUCER_TOPIC_NAME
+              value: ihbtkt-customeractivity-evl-transactionin
+            - name: MOOVA_AFC_TICKETINGCHANNELINTERFACE_CJ_PURCHASECLEANER_MEDIA_KAFKA_TOPIC_NAME
+              value: ihbtkt-medialifecycle-evl-mediain
+            - name: MOOVA_AFC_TICKETINGCHANNELINTERFACE_CJ_PURCHASECLEANER_WHITELIST_KAFKA_TOPIC_NAME
+              value: ihbtkt-customeractivity-evl-whitelistin
+            - name: MOOVA_AFC_TICKETINGCHANNELINTERFACE_CJ_PURCHASECLEANER_FARECOLLECTIONS_KAFKA_TOPIC_NAME
+              value: afc-offeringconfiguration-evl-farecollections
+            - name: MOOVA_AFC_TICKETINGCHANNELINTERFACE_CJ_PURCHASECLEANER_ACCOUNTBASEDSUMMARY_KAFKA_TOPIC_NAME
+              value: ihbtkt-customeractivity-evl-abcapsummary
+            - name: MOOVA_FND_CORE_LIB_SPRING_COMMON_CLIENT_OAUTH2_STRICT
+              value: "false"
+            - name: MOOVA_FND_CORE_LIB_SPRING_COMMON_CLIENT_OAUTH2_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  key: MOOVA_FND_CORE_LIB_SPRING_COMMON_CLIENT_OAUTH2_CLIENT_ID
+                  name: moova-global-secret
+            - name: MOOVA_FND_CORE_LIB_SPRING_COMMON_CLIENT_OAUTH2_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  key: MOOVA_FND_CORE_LIB_SPRING_COMMON_CLIENT_OAUTH2_CLIENT_SECRET
+                  name: moova-global-secret
+            - name: MOOVA_FND_CORE_LIB_SPRING_COMMON_CLIENT_OAUTH2_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: password
+                  name: moova-ihbtkt-be-integrator
+            - name: MOOVA_FND_CORE_LIB_SPRING_COMMON_CLIENT_OAUTH2_PROFILE
+              value: ihbtkt.be.integrator
+            - name: MOOVA_FND_CORE_LIB_SPRING_COMMON_CLIENT_OAUTH2_GRANT_TYPE
+              value: password
+            - name: MOOVA_FND_CORE_LIB_SPRING_COMMON_CLIENT_OAUTH2_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  key: username
+                  name: moova-ihbtkt-be-integrator
+            - name: MOOVA_FND_CORE_LIB_SPRING_COMMON_CLIENT_OAUTH2_TOKEN_URI
+              valueFrom:
+                configMapKeyRef:
+                  key: MOOVA_FND_CORE_LIB_SPRING_COMMON_CLIENT_OAUTH2_TOKEN_URI
+                  name: moova-global-cm
+            - name: MOOVA_FND_CORE_LIB_SPRING_COMMON_CLIENT_OAUTH2_AUTO_CONFIGURATION
+              value: "true"
+            - name: MOOVA_AFC_TICKETINGCHANNELINTERFACE_CJ_PURCHASECLEANER_CUSTOMERACTIVITY_BASE_URL
+            - name: MOOVA_AFC_TICKETINGCHANNELINTERFACE_CJ_PURCHASECLEANER_CHARGEOFF_DAYS
+              value: "10"
+            - name: MOOVA_AFC_TICKETINGCHANNELINTERFACE_CJ_PURCHASECLEANER_INTERACTIVETICKETING_BASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: MOOVA_AFC_TICKETINGCHANNELINTERFACE_API_INTERACTIVETICKETINGMNGR_BASE_URL
+                  name: moova-global-cm
+            - name: MOOVA_AFC_TICKETINGCHANNELINTERFACE_CJ_PURCHASECLEANER_SECRETKEY
+              value: 85A3CQC0GISQZIOUHE65E3VHCKR75S02
+            - name: MOOVA_AFC_TICKETINGCHANNELINTERFACE_CJ_PURCHASECLEANER_APIKEY
+              value: ALIAS_WEB_00056862
+            - name: MOOVA_AFC_TICKETINGCHANNELINTERFACE_CJ_PURCHASECLEANER_NEXISITUATIONORDER_BASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: MOOVA_AFC_TICKETINGCHANNELINTERFACE_CJ_PURCHASECLEANER_NEXISITUATIONORDER_BASE_URL
+                  name: moova-global-cm
+            - name: MOOVA_AFC_TICKETINGCHANNELINTERFACE_CJ_PURCHASECLEANER_CHARGEOFF_MIN
+              value: "5"
+            - name: spring.cassandra.local-datacenter
+              value: dc1
+            - name: MOOVA_AFC_TICKETINGCHANNELINTERFACE_CJ_PURCHASECLEANER_CASSANDRA_DATACENTER
+              value: dc1            
+            image: 531024339537.dkr.ecr.eu-west-1.amazonaws.com/afc-ticketingchannelinterface-cj-purchasecleaner:0.1.5
+            imagePullPolicy: IfNotPresent
+            name: afc-ticketingchannelinterface-cj-purchasecleaner
+            resources:
+              limits:
+                memory: 1024Mi
+              requests:
+                memory: 1024Mi
+            terminationMessagePath: /dev/termination-log
+            terminationMessagePolicy: File
+            volumeMounts:
+            - mountPath: /deployments/certs/truststore.jks
+              name: moova-java-keystore-volume
+              subPath: truststore.jks
+            - mountPath: /deployments/certs/keystore.jks
+              name: moova-java-keystore-volume
+              subPath: keystore.jks
+          dnsPolicy: ClusterFirst
+          restartPolicy: OnFailure
+          schedulerName: default-scheduler
+          securityContext: {}
+          terminationGracePeriodSeconds: 30
+          volumes:
+          - name: moova-java-keystore-volume
+            secret:
+              defaultMode: 420
+              secretName: moova-java-keystore
+  schedule: '*/15 * * * *'
+  startingDeadlineSeconds: 200
+  successfulJobsHistoryLimit: 3
+  suspend: false
