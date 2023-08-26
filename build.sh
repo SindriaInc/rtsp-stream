@@ -46,3 +46,10 @@ docker build ./src/ui \
     --build-arg TAG_SUFFIX=${TAG_SUFFIX} \
     --build-arg TIMEZONE=${TIMEZONE} \
     --build-arg API_URL=${API_URL}
+
+docker build ./src/job \
+    --tag ${IMAGE_NAME}:${TAG_VERSION}-job \
+    --build-arg HOST_USER_UID=${HOST_USER_UID} \
+    --build-arg TAG_VERSION=${TAG_VERSION} \
+    --build-arg TIMEZONE=${TIMEZONE} \
+    --build-arg API_URL=${API_URL}

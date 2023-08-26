@@ -21,3 +21,5 @@ docker push ${IMAGE_NAME}:latest
 docker push ${IMAGE_NAME}:${TAG_VERSION}-2-api
 # UI
 docker push ${IMAGE_NAME}:${TAG_VERSION}-2-ui
+# JOB
+docker push ${IMAGE_NAME}:${TAG_VERSION}-2-job

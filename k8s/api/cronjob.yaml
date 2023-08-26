@@ -18,16 +18,13 @@ spec:
             app: rtsp-stream-cj
         spec:
           containers:
-          - command:
-            - bash
-            - rm
-            - -Rf
-            - /app/videos/*
-            env:
+          - env:
             - name: JAVA_OPTS
               value: -Xmx512m -Djavax.net.ssl.trustStore=/deployments/certs/truststore.jks
-            image: sindriainc/python:3.0.0-3.10
+            image: sindriainc/rtsp-stream:1.1.0-job
             imagePullPolicy: IfNotPresent
+            #command: [ "/bin/bash" ]
+            #args: [ "rm", "-rf", "/app/videos/*" ]
             name: rtsp-stream-cj
             resources:
               limits:
