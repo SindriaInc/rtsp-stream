@@ -14,9 +14,14 @@ LABEL \
 
 ENV TZ=${TIMEZONE}
 
-# Setting timezone
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+# Setting timezone and folders
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone && \
+    mkdir -p /app && \
+    mkdir -p /app/videos
 
-CMD ["/bin/bash", "rm", "-Rf", "/app/videos/*"]
+WORKDIR /app
+
+COPY resources/job.sh /usr/local/bin/job.sh
+CMD ["/bin/bash", "/usr/local/bin/job.sh"]
 
 ENTRYPOINT [""]
