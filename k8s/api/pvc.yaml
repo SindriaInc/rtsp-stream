@@ -9,7 +9,7 @@ metadata:
 #provisioner: kubernetes.io/aws-ebs
 spec:
  accessModes:
-  - ReadWriteMany
+  - ReadWriteOnce
  resources:
   requests:
    storage: 512Gi
