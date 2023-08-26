@@ -49,7 +49,7 @@ spec:
               persistentVolumeClaim:
                 claimName: rtsp-stream-api
                 #defaultMode: 420
-  schedule: '* * * * *'
+  schedule: '0 5 * * *'
   startingDeadlineSeconds: 200
   successfulJobsHistoryLimit: 3
   suspend: false
